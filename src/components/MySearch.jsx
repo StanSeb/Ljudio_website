@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { ReactDOM, render } from "react-dom";
+import Player from "./Player";
+import PlayerWindow from "./PlayerWindow";
 
 function MySearch() {
 
@@ -8,10 +11,11 @@ function MySearch() {
     const [albumResults, setAlbumResults] = useState([])
     const [artistResults, setArtistResults] = useState([])
     const [songResults, setSongResults] = useState([])
-    const [videoResults, setVideoResults] = useState([])
     const handleChange = event => {
         setSearchTerm(event.target.value)
     }
+
+    let chosenVideoId = '';
 
     async function fetchData() {
         try{
@@ -24,7 +28,6 @@ function MySearch() {
             let albumArray = []
             let artistArray = []
             let songArray = []
-            let videoArray = []
 
             
 
@@ -35,11 +38,8 @@ function MySearch() {
                 else if(dataContent[i].type == 'artist'){
                     artistArray.push(dataContent[i])
                 }
-                else if(dataContent[i].type == 'song'){
-                    songArray.push(dataContent[i])
-                }
                 else if(dataContent[i].type == 'video'){
-                    videoArray.push(dataContent[i])
+                    songArray.push(dataContent[i])
                 }
                 else{
                     console.log(dataContent[i])
@@ -49,11 +49,8 @@ function MySearch() {
             setAlbumResults(albumArray)
             setArtistResults(artistArray)
             setSongResults(songArray)
-            setVideoResults(videoArray)
             
-            
-            
-        }catch(e){
+            }catch(e){
             console.error(e)
         }
     }
@@ -64,6 +61,12 @@ function MySearch() {
         //console.log(searchResults)
     }
 
+    function getVideoId(id){
+        chosenVideoId = id
+        console.log(chosenVideoId)
+        
+        return render(<Player chosenVideoId={id}/>, document.getElementById('player-container'))
+    }
 
     return (
         <div id="search-container">
@@ -95,14 +98,7 @@ function MySearch() {
                 {songResults.map((item, index) => (
                         <li key={index}>
                             <p>{item.name}</p>
-                            </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Videos</h2>
-                {videoResults.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.name}</p>
+                            <button type="submit" onClick={() => {getVideoId(item.videoId)}}>Play {item.name}</button>
                             </li>
                     ))}
                 </ul>

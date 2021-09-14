@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MySearch from './components/MySearch'
+import PlayerWindow from './components/PlayerWindow'
 
 import {
   BrowserRouter as Router,
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/">
             <h1>Ljudio</h1>
               <MySearch />
+              <PlayerWindow />
           </Route>
         </Switch>
       </main>
