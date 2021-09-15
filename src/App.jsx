@@ -16,18 +16,18 @@ function App() {
   return (
     <Router>
       <nav>
-        <Link to="/">Home</Link>
+        <h1>Ljudio</h1>
       </nav>
       <main>
         <Switch>
           <Route exact path="/">
-            <h1>Ljudio</h1>
-              <MySearch />
-              <PlayerWindow />
+            <MySearch />
           </Route>
         </Switch>
       </main>
-
+      <footer>
+            <PlayerWindow />
+      </footer>
     </Router>
   )
 }
