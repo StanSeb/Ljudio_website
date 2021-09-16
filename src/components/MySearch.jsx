@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
-import Player from "./Player";
+
+import MyResults from "./MyResults";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+
 
 function MySearch() {
 
@@ -17,8 +17,6 @@ function MySearch() {
     const handleChange = event => {
         setSearchTerm(event.target.value)
     }
-
-    let chosenVideoId = '';
 
     async function fetchData() {
         try {
@@ -41,7 +39,7 @@ function MySearch() {
                 else if (dataContent[i].type == 'artist') {
                     artistArray.push(dataContent[i])
                 }
-                else if (dataContent[i].type == 'video') {
+                else if (dataContent[i].type == 'song'){
                     songArray.push(dataContent[i])
                 }
                 else {
@@ -61,17 +59,8 @@ function MySearch() {
     function handleSubmit(e) {
         e.preventDefault()
         fetchData()
-        //console.log(searchResults)
     }
 
-    function getVideoId(id) {
-        chosenVideoId = id
-        console.log(chosenVideoId)
-
-        return render(<Player chosenVideoId={id} />, document.getElementById('player-container'))
-    }
-
-   
 
     return (
         <div id="search-and-results-container">
@@ -80,40 +69,13 @@ function MySearch() {
                     <div id="input-container">
                         <input type="text" value={searchTerm} onChange={handleChange} />
                         <button type="submit">
-                        <FontAwesomeIcon icon={faSearch} size='2x' />
+                            <FontAwesomeIcon icon={faSearch} size='2x' />
                         </button>
                     </div>
                 </form>
             </div>
             <div id="result-container">
-                <ul>
-                    <h2>Albums</h2>
-                    {albumResults.map((item, index) => (
-                        <li key={index}>
-                            <img id="album-image" src={item.thumbnails[0].url} alt="" />                            
-                            <p>{item.name}</p>
-                        </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Artists</h2>
-                    {artistResults.map((item, index) => (
-                        <li key={index}>
-                            <img id="artist-image" src={item.thumbnails[0].url} alt="" />
-                            <p>{item.name}</p>
-                        </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Songs</h2>
-                    {songResults.map((item, index) => (
-                        <li key={index}>
-                            <img id="song-image" src={item.thumbnails.url} alt="" />
-                            <p>{item.name}</p>
-                            <button id="song-btn" type="submit" onClick={() => { getVideoId(item.videoId) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></button>
-                        </li>
-                    ))}
-                </ul>
+                <MyResults albumResults = {albumResults} artistResults = {artistResults} songResults = {songResults}/>
             </div>
         </div>
     )

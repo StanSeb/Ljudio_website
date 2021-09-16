@@ -1,17 +1,14 @@
 import React from 'react'
 import MySearch from './components/MySearch'
-import PlayerWindow from './components/PlayerWindow'
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom"
 
 
 function App() {
-
 
   return (
     <Router>
@@ -26,7 +23,9 @@ function App() {
         </Switch>
       </main>
       <footer>
-            <PlayerWindow />
+        <div id="player-container">
+          <h1>Search and play a song to get access to player controls</h1>
+        </div>
       </footer>
     </Router>
   )
