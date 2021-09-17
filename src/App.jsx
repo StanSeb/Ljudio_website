@@ -1,12 +1,12 @@
 import React from 'react'
-import MySearch from './components/MySearch'
-
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom"
 
+import MySearch from './components/MySearch'
+import MyResults from './components/MyResults'
 
 function App() {
 

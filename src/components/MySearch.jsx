@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { render } from "react-dom";
 
 import MyResults from "./MyResults";
 
@@ -14,11 +15,15 @@ function MySearch() {
     const [albumResults, setAlbumResults] = useState([])
     const [artistResults, setArtistResults] = useState([])
     const [songResults, setSongResults] = useState([])
+    const [playlistResults, setPlaylistResults] = useState([])
+    const [showResults, setShowresults] = useState(false)
+
     const handleChange = event => {
         setSearchTerm(event.target.value)
     }
 
     async function fetchData() {
+
         try {
             const response = await fetch(heroApi + searchTerm)
             const data = await response.json()
@@ -29,18 +34,21 @@ function MySearch() {
             let albumArray = []
             let artistArray = []
             let songArray = []
-
-
+            let playlistArray = []
 
             for (let i = 0; i < dataContent.length; i++) {
+
                 if (dataContent[i].type == 'album') {
                     albumArray.push(dataContent[i])
                 }
                 else if (dataContent[i].type == 'artist') {
                     artistArray.push(dataContent[i])
                 }
-                else if (dataContent[i].type == 'song'){
+                else if (dataContent[i].type == 'song') {
                     songArray.push(dataContent[i])
+                }
+                else if (dataContent[i].type.includes('playlist')){
+                    playlistArray.push(dataContent[i])
                 }
                 else {
                     console.log('Nothing else matters...')
@@ -50,15 +58,20 @@ function MySearch() {
             setAlbumResults(albumArray)
             setArtistResults(artistArray)
             setSongResults(songArray)
+            setPlaylistResults(playlistArray)
+            setShowresults(true)
 
         } catch (e) {
             console.error(e)
         }
+
     }
+
 
     function handleSubmit(e) {
         e.preventDefault()
         fetchData()
+
     }
 
 
@@ -74,8 +87,8 @@ function MySearch() {
                     </div>
                 </form>
             </div>
-            <div id="result-container">
-                <MyResults albumResults = {albumResults} artistResults = {artistResults} songResults = {songResults}/>
+            <div id="result-container" style={{display: showResults ? 'flex' : 'none' }}>
+                <MyResults albumResults={albumResults} artistResults={artistResults} songResults={songResults} playlistResults={playlistResults} />
             </div>
         </div>
     )
