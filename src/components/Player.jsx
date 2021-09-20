@@ -39,7 +39,6 @@ class Player extends React.Component {
 
         return (
             <div id="player">
-                <h3>Playing: {this.props.chosenVideo}</h3>
                 <div id="player-buttons">
                     <button id="backward-btn"  onClick={() => { playState.target.previousVideo() }}>
                         <FontAwesomeIcon icon={faChevronCircleLeft} size='5x'/>
