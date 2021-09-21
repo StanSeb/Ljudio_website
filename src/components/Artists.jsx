@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom'
 
 function Artists(props) {
-
-    const artistApi = 'https://yt-music-api.herokuapp.com/api/yt/artists/'
-
-    const [artistResults, setArtistResults] = useState([])
 
     // Defining variables to get in to the object we get from props
     let match = props.match
     let params = match.params
 
+    const history = useHistory()
+
+    const artistsApi = 'https://yt-music-api.herokuapp.com/api/yt/artists/'
+
+    const [artistsResults, setArtistsResults] = useState([])
+
     async function getArtists() {
         try {
-            const response = await fetch(artistApi + params.searchTerm)
+            const response = await fetch(artistsApi + params.searchTerm)
             const data = await response.json()
             const stringifyData = (JSON.stringify(data, undefined, 4))
             const dataObject = JSON.parse(stringifyData)
             const dataContent = dataObject['content']
 
-            let artistArray = []
+            let artistsArray = []
 
             for (let i = 0; i < dataContent.length; i++) {
-                artistArray.push(dataContent[i])
+                artistsArray.push(dataContent[i])
             }
 
-            setArtistResults(artistArray)
-
+            setArtistsResults(artistsArray)
         }
         catch (e) {
             console.error(e)
@@ -36,14 +38,20 @@ function Artists(props) {
         getArtists()
     }, [])
 
-
     return <>
         <div id="artists-container">
             <ul>
                 <h2 style={{textTransform: 'uppercase'}}>Artists with the name {params.searchTerm}</h2>
-                {artistResults.map((item, index) => (
+                {artistsResults.map((item, index) => (
                     <li key={index}>
-                        <div id="result-li-container">
+                        <div id="result-li-container" onClick={() => {
+                            history.push({
+                                pathname: '/artist/' + item.browseId,
+                                state: {
+                                    id: item.browseId,
+                                }
+                            })
+                        }}>
                             <img id="artist-image" src={item.thumbnails[0].url} alt="" />
                             <div id="artist-text">
                             <p>{item.name}</p>

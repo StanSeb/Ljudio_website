@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom'
 
 function Playlists(props) {
 
-    const playlistApi = 'https://yt-music-api.herokuapp.com/api/yt/playlists/'
+    const playlistsApi = 'https://yt-music-api.herokuapp.com/api/yt/playlists/'
 
-    const [playlistResults, setPlaylistResults] = useState([])
+    const [playlistsResults, setPlaylistsResults] = useState([])
 
     // Defining variables to get in to the object we get from props
     let match = props.match
     let params = match.params
 
+    const history = useHistory()
+
     async function getPlaylists() {
         try {
-            const response = await fetch(playlistApi + params.searchTerm)
+            const response = await fetch(playlistsApi + params.searchTerm)
             const data = await response.json()
             const stringifyData = (JSON.stringify(data, undefined, 4))
             const dataObject = JSON.parse(stringifyData)
             const dataContent = dataObject['content']
 
-            let playlistArray = []
+            let playlistsArray = []
 
             for (let i = 0; i < dataContent.length; i++) {
-                playlistArray.push(dataContent[i])
+                playlistsArray.push(dataContent[i])
             }
 
-            setPlaylistResults(playlistArray)
+            setPlaylistsResults(playlistsArray)
 
         }
         catch (e) {
@@ -46,14 +49,21 @@ function Playlists(props) {
 
 
     return <>
-        <div id="playlist-container">
+        <div id="playlists-container">
             <ul>
                 <h2 style={{textTransform: 'uppercase'}}>Playlists with {params.searchTerm}</h2>
-                {playlistResults.map((item, index) => (
+                {playlistsResults.map((item, index) => (
                     <li key={index}>
-                        <div id="result-li-container">
-                        <img id="playlist-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
-                        <div id="playlist-text">
+                        <div id="result-li-container" onClick={() => {
+                            history.push({
+                                pathname: '/playlist/' + item.browseId,
+                                state: {
+                                    id: item.browseId,
+                                }
+                            })
+                        }}>
+                        <img id="playlists-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
+                        <div id="playlists-text">
                                 <h4>Name</h4>
                                 <p>{item.title}</p>
                                 <h4>Author</h4>

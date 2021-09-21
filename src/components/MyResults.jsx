@@ -9,11 +9,12 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 function MyResults(props) {
 
-    const history = useHistory()
-
     let chosenVideoId = ''
+    let chosenName = ''
     let chosenPlaylistId = ''
     let propsSearchTerm = props.location.state.searchTerm
+
+    const history = useHistory()
 
     const heroApi = 'https://yt-music-api.herokuapp.com/api/yt/search/'
 
@@ -70,20 +71,16 @@ function MyResults(props) {
         fetchData()
     }, [])
 
-    function getVideoId(id) {
-        chosenVideoId = id
-        return render(<Player chosenVideo={id} />, document.getElementById('player-container'))
+    function getVideoId(item) {
+        chosenVideoId = item.videoId
+        chosenName = item.name
+        return render(<Player chosenVideo={chosenVideoId} title={chosenName}/>, document.getElementById('player-container'))
     }
 
     function getPlaylistId(id) {
         chosenPlaylistId = id
         return render(<Player chosenPlaylist={id} />, document.getElementById('player-container'))
     }
-
-    /* function fetchLink(url) {
-        navigator.clipboard.writeText(url)
-        alert("The link has been copied to you clipboard!")
-    } */
 
     function checkThumbnailsForArrayOrObject(thumbnails) {
         if (Object.prototype.toString.call(thumbnails) === '[object Array]') {
@@ -140,7 +137,14 @@ function MyResults(props) {
                             <p onClick={goToArtists}>More &gt;</p>
                         </div>
                         <li>
-                            <div id="hover-li-container">
+                            <div id="hover-li-container" onClick={() => {
+                            history.push({
+                                pathname: '/artist/' + artistResults[0].browseId,
+                                state: {
+                                    id: artistResults[0].browseId,
+                                }
+                            })
+                        }}>
                                 <img id="artist-image" src={artistResults[0].thumbnails[0].url} alt="" />
                                 <p>{artistResults[0].name}</p>
                             </div>
@@ -149,52 +153,59 @@ function MyResults(props) {
                     </ul>
                 }
                 <ul>
-                <div id="topic-more-container">
-                            <h3>Songs</h3>
-                            <p onClick={goToSongs}>More &gt;</p>
-                        </div>
+                    <div id="topic-more-container">
+                        <h3>Songs</h3>
+                        <p onClick={goToSongs}>More &gt;</p>
+                    </div>
                     {songResults.slice(0, 2).map((item, index) => (
                         <li key={index}>
                             <div id="result-li-container">
                                 <img id="song-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
                                 <p>{item.name}</p>
                             </div>
-                            <button id="song-btn" type="submit" onClick={() => { getVideoId(item.videoId) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></button>
+                            <i id="song-btn" type="submit" onClick={() => { getVideoId(item) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
                         </li>
                     ))}
                 </ul>
                 <ul>
                     {albumResults.length != 0 &&
                         <div id="topic-more-container">
-                        <h3>Albums</h3>
-                        <p onClick={goToAlbums}>More &gt;</p>
-                    </div>
+                            <h3>Albums</h3>
+                            <p onClick={goToAlbums}>More &gt;</p>
+                        </div>
                     }
                     {albumResults.slice(0, 2).map((item, index) => (
                         <li key={index}>
                             <div id="result-li-container">
                                 <img id="album-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
-                                    <p>{item.name}</p>
+                                <p>{item.name}</p>
                             </div>
                         </li>
                     ))}
                 </ul>
                 <ul>
-                <div id="topic-more-container">
-                            <h3>Playlists</h3>
-                            <p onClick={goToPlaylists}>More &gt;</p>
-                        </div>
+                    <div id="topic-more-container">
+                        <h3>Playlists</h3>
+                        <p onClick={goToPlaylists}>More &gt;</p>
+                    </div>
                     {playlistResults.slice(0, 2).map((item, index) => (
                         <li key={index}>
-                            <div id="hover-li-container">
+                            <div id="hover-li-container" onClick={() => {
+                            history.push({
+                                pathname: '/playlist/' + item.browseId,
+                                state: {
+                                    id: item.browseId,
+                                }
+                            })
+                        }}>
                                 <img id="playlist-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
                                 <p>{item.title}</p>
                             </div>
-                            <button id="song-btn" type="submit" onClick={() => { getPlaylistId(item.browseId.substring(2)) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></button>
+                            <i id="song-btn" type="submit" onClick={() => { getPlaylistId(item.browseId.substring(2)) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
                         </li>
                     ))}
                 </ul>
-               
+
             </div>
         </div>
     </>

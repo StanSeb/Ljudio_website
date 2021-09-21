@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link
 } from "react-router-dom"
 
 import MySearch from './components/MySearch'
@@ -12,6 +13,8 @@ import Artists from './components/Artists'
 import Albums from './components/Albums'
 import Songs from './components/Songs'
 import Playlists from './components/Playlists'
+import Artist from './components/Artist'
+import Playlist from './components/Playlist'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
@@ -22,7 +25,7 @@ function App() {
     <Router>
       <nav>
         <i onClick={() => history.back()}><FontAwesomeIcon icon={faArrowLeft} size='2x' /></i>                
-        <h1>Ljudio</h1>
+        <Link to="/" id="nav-logo">Ljudio</Link>
       </nav>
       <main>
         <Switch>
@@ -34,6 +37,8 @@ function App() {
           <Route exact path="/albums/:searchTerm" component={Albums} />
           <Route exact path="/songs/:searchTerm" component={Songs} />
           <Route exact path="/playlists/:searchTerm" component={Playlists} />
+          <Route exact path="/artist/:id" component={Artist} />
+          <Route exact path="/playlist/:id" component={Playlist} />
         </Switch>
       </main>
       <footer>

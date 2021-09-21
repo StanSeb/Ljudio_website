@@ -64,7 +64,7 @@ function Songs(props) {
                                 <p>{item.artist.name}</p>
                             </div>
                         </div>
-                        <button id="song-btn" type="submit" onClick={() => { getVideoId(item.videoId) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></button>
+                        <i id="song-btn" type="submit" onClick={() => { getVideoId(item.videoId) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
                     </li>
                 ))}
             </ul>
