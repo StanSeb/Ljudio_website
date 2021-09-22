@@ -15,6 +15,7 @@ import Songs from './components/Songs'
 import Playlists from './components/Playlists'
 import Artist from './components/Artist'
 import Playlist from './components/Playlist'
+import Song from './components/Song'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/playlists/:searchTerm" component={Playlists} />
           <Route exact path="/artist/:id" component={Artist} />
           <Route exact path="/playlist/:id" component={Playlist} />
+          <Route exact path="/song/:id" component={Song} />
         </Switch>
       </main>
       <footer>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { render } from "react-dom";
 import { useHistory } from 'react-router-dom'
-
 import Player from "./Player";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,9 +8,6 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 function MyResults(props) {
 
-    let chosenVideoId = ''
-    let chosenName = ''
-    let chosenPlaylistId = ''
     let propsSearchTerm = props.location.state.searchTerm
 
     const history = useHistory()
@@ -71,14 +67,11 @@ function MyResults(props) {
         fetchData()
     }, [])
 
-    function getVideoId(item) {
-        chosenVideoId = item.videoId
-        chosenName = item.name
-        return render(<Player chosenVideo={chosenVideoId} title={chosenName}/>, document.getElementById('player-container'))
+    function getVideoId(videoId) {
+        return render(<Player chosenVideo={videoId} />, document.getElementById('player-container'))
     }
 
     function getPlaylistId(id) {
-        chosenPlaylistId = id
         return render(<Player chosenPlaylist={id} />, document.getElementById('player-container'))
     }
 
@@ -126,6 +119,10 @@ function MyResults(props) {
         })
     }
 
+    function goToSong(videoId) {
+        history.push({ pathname: '/song/' + videoId })
+    }
+
     return <>
         <div id="result-container">
             <h2>Top hits</h2>
@@ -138,13 +135,13 @@ function MyResults(props) {
                         </div>
                         <li>
                             <div id="hover-li-container" onClick={() => {
-                            history.push({
-                                pathname: '/artist/' + artistResults[0].browseId,
-                                state: {
-                                    id: artistResults[0].browseId,
-                                }
-                            })
-                        }}>
+                                history.push({
+                                    pathname: '/artist/' + artistResults[0].browseId,
+                                    state: {
+                                        id: artistResults[0].browseId,
+                                    }
+                                })
+                            }}>
                                 <img id="artist-image" src={artistResults[0].thumbnails[0].url} alt="" />
                                 <p>{artistResults[0].name}</p>
                             </div>
@@ -159,11 +156,11 @@ function MyResults(props) {
                     </div>
                     {songResults.slice(0, 2).map((item, index) => (
                         <li key={index}>
-                            <div id="result-li-container">
+                            <div id="hover-li-container" onClick={() => { goToSong(item.videoId) }}>
                                 <img id="song-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
                                 <p>{item.name}</p>
                             </div>
-                            <i id="song-btn" type="submit" onClick={() => { getVideoId(item) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
+                            <i id="song-btn" type="submit" onClick={() => { getVideoId(item.videoId) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
                         </li>
                     ))}
                 </ul>
@@ -191,13 +188,13 @@ function MyResults(props) {
                     {playlistResults.slice(0, 2).map((item, index) => (
                         <li key={index}>
                             <div id="hover-li-container" onClick={() => {
-                            history.push({
-                                pathname: '/playlist/' + item.browseId,
-                                state: {
-                                    id: item.browseId,
-                                }
-                            })
-                        }}>
+                                history.push({
+                                    pathname: '/playlist/' + item.browseId,
+                                    state: {
+                                        id: item.browseId,
+                                    }
+                                })
+                            }}>
                                 <img id="playlist-image" src={checkThumbnailsForArrayOrObject(item.thumbnails)} alt="" />
                                 <p>{item.title}</p>
                             </div>
@@ -205,7 +202,6 @@ function MyResults(props) {
                         </li>
                     ))}
                 </ul>
-
             </div>
         </div>
     </>

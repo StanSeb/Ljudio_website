@@ -19,10 +19,6 @@ function Playlist(props) {
     let match = props.match
     let params = match.params
 
-    let chosenVideoId = ''
-    let chosenName = ''
-    let chosenPlaylistId = ''
-
     async function getPlaylist() {
         try {
             const response = await fetch(playlistApi + params.id)
@@ -56,13 +52,10 @@ function Playlist(props) {
     }, [])
 
     function getVideoId(item) {
-        chosenVideoId = item.videoId
-        chosenName = item.name
-        return render(<Player chosenVideo={chosenVideoId} title={chosenName}/>, document.getElementById('player-container'))
+        return render(<Player chosenVideo={item.videoId} />, document.getElementById('player-container'))
     }
 
     function getPlaylistId(id) {
-        chosenPlaylistId = id
         return render(<Player chosenPlaylist={id} />, document.getElementById('player-container'))
     }
 
@@ -73,12 +66,13 @@ function Playlist(props) {
         alert("The link has been copied to you clipboard!")
     }
 
-
     return (
         <div id="playlist-container">
-            <h2 style={{ textTransform: 'uppercase' }}>{playlistObject.title}'s info page</h2>
+            <h2 style={{ textTransform: 'uppercase' }}>{playlistObject.title}</h2>
             <div id="playlist-text-image">
-                <img src={thumbnail} alt="" />
+                <div id="image-container">
+                    <img src={thumbnail} alt="" />
+                </div>
                 <div id="playlist-text">
                     <p>Number of tracks: {playlistObject.trackCount}</p>
                     <p>{playlistObject.dateYear}</p>
@@ -93,7 +87,7 @@ function Playlist(props) {
                     <ul>
                         {playlistResults.map((song, index) => (
                             <li key={index}>
-                                <p>{song.name}</p>
+                                <p>{index + 1} - {song.name}</p>
                                 <i id="song-btn" type="submit" onClick={() => { getVideoId(song) }}><FontAwesomeIcon icon={faPlayCircle} size='2x' /></i>
                             </li>
                         ))}

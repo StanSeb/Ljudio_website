@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
+import { useHistory } from "react-router";
 
 import Player from "./Player";
 
@@ -12,7 +13,7 @@ function Songs(props) {
 
     const [songResults, setSongResults] = useState([])
 
-    let chosenVideoId = '';
+    const history = useHistory()
 
     // Defining variables to get in to the object we get from props
     let match = props.match
@@ -44,18 +45,22 @@ function Songs(props) {
         getSongs()
     }, [])
 
+
     function getVideoId(id) {
-        chosenVideoId = id
         return render(<Player chosenVideo={id} />, document.getElementById('player-container'))
+    }
+
+    function goToSong(videoId) {
+        history.push({ pathname: '/song/' + videoId })
     }
 
     return <>
         <div id="songs-container">
             <ul>
-                <h2 style={{textTransform: 'uppercase'}}>Songs with {params.searchTerm}</h2>
+                <h2 style={{ textTransform: 'uppercase' }}>Songs with {params.searchTerm}</h2>
                 {songResults.map((item, index) => (
                     <li key={index}>
-                        <div id="result-li-container">
+                        <div id="hover-li-container" onClick={() => { goToSong(item.videoId) }}>
                             <img id="songs-image" src={item.thumbnails[0].url} alt="" />
                             <div id="songs-text">
                                 <h4>Name</h4>

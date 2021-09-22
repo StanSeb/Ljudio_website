@@ -125,6 +125,8 @@ main>#search-and-results-container>#home-info-text{
 main>#result-container{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow-y: auto;
 }
 
@@ -140,6 +142,19 @@ main>#result-container>#result-ul-list{
   flex-direction: column;
   width: 100%;
   padding: 0 5rem;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  main>#result-container>#result-ul-list{
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  main>#result-container>#result-ul-list{
+    width: 50%;
+  }
 }
 
 main>#result-container>#result-ul-list #topic-more-container{
@@ -231,7 +246,7 @@ main>#result-container>#result-ul-list>ul>li>#result-li-container>img{
   object-fit: cover;
 }
 
-main>#result-container>#result-ul-list>ul>li>#hover-li-container:hover{
+#hover-li-container:hover{
   background-color: rgb(255, 164, 60);
   transition: 0.2s ease;
   color: black;
@@ -239,12 +254,12 @@ main>#result-container>#result-ul-list>ul>li>#hover-li-container:hover{
 }
 
 
-main>#result-container>#result-ul-list>ul>li>#song-btn {
+#song-btn {
   margin-left: 1rem;
   color: rgb(255, 164, 60);
 } 
 
-main>#result-container>#result-ul-list>ul>li>#song-btn:hover {
+#song-btn:hover {
   color: white;
   transition: 0.2s ease;
   cursor: pointer;
@@ -268,6 +283,22 @@ main>#album-container>ul>li {
   width: 80%;
   border-bottom: 1px solid rgb(65, 65, 65);
   margin-top: 1rem;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  main>#album-container>ul>li{
+    width: 70%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px){
+
+  main>#album-container>ul>li{
+    width: 50%;
+  }
+
 }
 
 main>#album-container>ul>li>#result-li-container{
@@ -314,6 +345,22 @@ main>#playlists-container>ul>li {
   border-bottom: 1px solid rgb(65, 65, 65);
   margin-top: 1rem;
   color: white;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  main>#playlists-container>ul>li{
+    width: 70%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px){
+
+  main>#playlists-container>ul>li{
+    width: 50%;
+  }
+
 }
 
 main>#playlists-container>ul>li>#result-li-container{
@@ -417,11 +464,28 @@ main>#songs-container>ul {
   list-style-type: none;
 }
 
+@media only screen and (min-width: 1000px) {
+
+  main>#songs-container>ul>li{
+    width: 70%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px){
+
+  main>#songs-container>ul>li{
+    width: 50%;
+  }
+
+}
+
 main>#songs-container>ul>h2 {
   margin: 2rem 0rem;
   color: white;
   font-size: var(--fs-600);
 }
+
 
 
 main>#artists-container>ul {
@@ -445,6 +509,22 @@ main>#artists-container>ul>li {
   border-bottom: 1px solid rgb(65, 65, 65);
   margin-top: 1rem;
   color: white;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  main>#artists-container>ul>li{
+    width: 70%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px){
+
+  main>#artists-container>ul>li{
+    width: 50%;
+  }
+
 }
 
 main>#artists-container>ul>li>#result-li-container{
@@ -484,14 +564,19 @@ main>#artist-container>#result-li-container{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 0 5rem;
 }
 
-main>#artist-container>#result-li-container>img{
+main>#artist-container>#result-li-container>#artist-image-container{
+  margin-bottom: 2rem;
+  max-width: 70%;
+}
+
+main>#artist-container>#result-li-container>#artist-image-container>img{
   width: 100%;
   object-fit: cover;
-  margin-bottom: 2rem;
 }
 
 main>#artist-container>#result-li-container>#artist-text{
@@ -594,10 +679,17 @@ main>#playlist-container>h2{
   margin: 2rem 0;
 }
 
-main>#playlist-container>#playlist-text-image>img{
-  width: 100%;
+main>#playlist-container>#playlist-text-image>#image-container{
+  display: flex;
+  justify-content: center;
+}
+
+main>#playlist-container>#playlist-text-image>#image-container>img{
+  max-width: 70%;
   object-fit: cover;
 }
+
+
 
 main>#playlist-container>#playlist-text-image>#playlist-text{
   display: flex;
@@ -631,6 +723,22 @@ main>#playlist-container>#result-li-container{
   width: 100%;
 }
 
+@media only screen and (min-width: 1000px) {
+
+  main>#playlist-container>#result-li-container{
+    width: 70%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px){
+
+  main>#playlist-container>#result-li-container{
+    width: 50%;
+  }
+
+}
+
 main>#playlist-container>#result-li-container>#playlist-songs>ul{
   list-style-type: none;
 }
@@ -648,6 +756,62 @@ main>#playlist-container>#result-li-container>#playlist-songs>ul>li>i{
 }
 
 main>#playlist-container>#result-li-container>#playlist-songs>ul>li>i:hover{
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+
+main>#song-container{
+  color: white;
+}
+
+main>#song-container>h2{
+  text-align: center;
+  font-size: var(--fs-600);
+  margin-top: 2rem;
+}
+
+main>#song-container>#result-li-container{
+  display: flex;
+  justify-content: center;
+  padding: 0 5rem;
+  margin-top: 2rem;
+}
+
+main>#song-container>#result-li-container>#song-image{
+  min-width: 25rem;
+  margin-right: 5rem;
+}
+
+main>#song-container>#result-li-container>#song-image>img{
+  width: 100%;
+  object-fit: cover;
+}
+
+main>#song-container>#result-li-container>#song-text{
+  display: flex;
+  flex-direction: column;
+  line-height: 3rem;
+}
+
+main>#song-container>#result-li-container>#song-text>h4{
+  font-size: var(--fs-400);
+}
+
+main>#song-container>#play-share{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+main>#song-container>#play-share>i{
+  color: rgb(255, 164, 60); 
+  margin: 3rem;
+}
+
+main>#song-container>#play-share>i:hover{
   color: white;
   cursor: pointer;
   transition: 0.2s ease;
@@ -683,6 +847,11 @@ footer>#player-container>#player>h4{
   font-size: var(--fs-400);
   color: white;
   margin: 1rem;
+}
+
+footer>#player-container>#player>#player-buttons{
+  position: absolute;
+  bottom: 10%;
 }
 
 footer>#player-container>#player>#player-buttons>i{

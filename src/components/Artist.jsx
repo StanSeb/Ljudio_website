@@ -72,7 +72,9 @@ function Artist(props) {
         <div id="artist-container">
             <h2 style={{ textTransform: 'uppercase' }}>{artistResults.name}'s info page</h2>
             <div id="result-li-container">
-                <img id="artist-image" src={thumbnail} alt="" />
+                <div id="artist-image-container">
+                    <img id="artist-image" src={thumbnail} alt="" />
+                </div>
                 <div id="artist-text">
                     <p><em>{artistResults.description}</em></p>
                     <div id="share">
