@@ -23,6 +23,7 @@ class Player extends React.Component {
     }
     
     getVideoData = (() => {
+        
         let playerInfo = playState.target.getVideoData().title            
         
         // Because I couldn't figure out states on a react class
@@ -30,13 +31,9 @@ class Player extends React.Component {
         // the innerhtml and put that into my h4. 
         let tempDiv = document.createElement('div')
         tempDiv.setAttribute("id", "tempDiv")
-
         render(playerInfo, tempDiv)
-
         let trueContainer = document.getElementById('player-title')
-
         let getTitle = tempDiv.innerHTML
-
         trueContainer.innerHTML = 'Now playing: '+getTitle
 
     })   

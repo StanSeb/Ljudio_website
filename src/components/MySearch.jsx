@@ -14,10 +14,13 @@ function MySearch() {
 
     const [searchTerm, setSearchTerm] = useState('')
 
+    // Sets the value from input field to searchTerm
     const handleChange = event => {
         setSearchTerm(event.target.value)
     }
 
+    // Uses event and prevent default to not refresh the window
+    // on form submit
     function handleSubmit(e) {
         e.preventDefault()
 

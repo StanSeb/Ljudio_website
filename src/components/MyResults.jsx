@@ -47,9 +47,6 @@ function MyResults(props) {
                 else if (dataContent[i].type.includes('playlist')) {
                     playlistArray.push(dataContent[i])
                 }
-                else {
-                    console.log('Nothing else matters...')
-                }
             }
 
             setAlbumResults(albumArray)

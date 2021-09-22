@@ -46,7 +46,6 @@ function Albums(props) {
         }
     }
 
-
     return <>
         <div id="album-container">
             <ul>
