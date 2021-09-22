@@ -1,111 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react"
+
+// Using history to push to MyResults
+// with a dynamic url and with a prop through "state"
+import { useHistory } from 'react-router-dom'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
 
 function MySearch() {
 
-    const heroApi = 'https://yt-music-api.herokuapp.com'
+    const history = useHistory()
 
     const [searchTerm, setSearchTerm] = useState('')
-    const [albumResults, setAlbumResults] = useState([])
-    const [artistResults, setArtistResults] = useState([])
-    const [songResults, setSongResults] = useState([])
-    const [videoResults, setVideoResults] = useState([])
+
+    // Sets the value from input field to searchTerm
     const handleChange = event => {
         setSearchTerm(event.target.value)
     }
 
-    async function fetchData() {
-        try{
-            const response = await fetch(heroApi + '/api/yt/search/' + searchTerm)
-            const data = await response.json()
-            const stringifyData = (JSON.stringify(data, undefined, 4))
-            const dataObject = JSON.parse(stringifyData)
-            const dataContent = dataObject['content']
-
-            let albumArray = []
-            let artistArray = []
-            let songArray = []
-            let videoArray = []
-
-            
-
-            for(let i = 0; i < dataContent.length; i++){
-                if(dataContent[i].type == 'album'){
-                    albumArray.push(dataContent[i])                    
-                }
-                else if(dataContent[i].type == 'artist'){
-                    artistArray.push(dataContent[i])
-                }
-                else if(dataContent[i].type == 'song'){
-                    songArray.push(dataContent[i])
-                }
-                else if(dataContent[i].type == 'video'){
-                    videoArray.push(dataContent[i])
-                }
-                else{
-                    console.log(dataContent[i])
-                }
-            }
-
-            setAlbumResults(albumArray)
-            setArtistResults(artistArray)
-            setSongResults(songArray)
-            setVideoResults(videoArray)
-            
-            
-            
-        }catch(e){
-            console.error(e)
-        }
-    }
-    
+    // Uses event and prevent default to not refresh the window
+    // on form submit
     function handleSubmit(e) {
         e.preventDefault()
-        fetchData()     
-        //console.log(searchResults)
+
+        history.push({
+            pathname: '/results/' + searchTerm,
+            state: {
+                searchTerm: searchTerm,
+            }
+        })
     }
 
 
     return (
-        <div id="search-container">
-            <form onSubmit={handleSubmit}>
-                <div id="input-container">
-                    <input type="text" value={searchTerm} onChange={handleChange} />
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-            <div id="result-container">
-                <ul>
-                    <h2>Albums</h2>
-                    {albumResults.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.name}</p>
-                            </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Artists</h2>
-                {artistResults.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.name}</p>
-                            </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Songs</h2>
-                {songResults.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.name}</p>
-                            </li>
-                    ))}
-                </ul>
-                <ul>
-                    <h2>Videos</h2>
-                {videoResults.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.name}</p>
-                            </li>
-                    ))}
-                </ul>
+        <div id="search-and-results-container">
+            <div id="search-container">
+                <form onSubmit={handleSubmit}>
+                    <div id="input-container">
+                        <input type="text" value={searchTerm} onChange={handleChange} />
+                        <button type="submit">
+                            <FontAwesomeIcon icon={faSearch} size='2x' />
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div id="home-info-text">
+                <p style={{ lineHeight: '3rem' }}>
+                    <em>
+                        "Ljudio is an application which uses Google IFrame API
+                        <br />
+                        together with Herokuapp
+                        for searching
+                        <br />
+                        Youtube
+                        videos, artists, albums, playlists and songs.
+                        <br />
+                        Have fun and start searching!"
+                    </em>
+                </p>
             </div>
         </div>
     )
