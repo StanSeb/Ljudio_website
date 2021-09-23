@@ -819,7 +819,7 @@ main>#song-container>#play-share>i:hover{
 
 footer{
   background-image: linear-gradient(rgb(49, 49, 49), rgb(15, 15, 15));
-  height: 10rem;  
+  height: 8rem;  
   width: 100%;
   border-top: 1px solid black;
   position: fixed;
